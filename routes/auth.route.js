@@ -1,10 +1,8 @@
 import { Router } from "express";
-import {signUp} from "./../controllers/auth.controller.js";
+import { signUp, signIn } from "./../controllers/auth.controller.js";
 const authRouter = Router();
-authRouter.get("/sign-up", signUp);
-authRouter.get("/sign-in", (req, res) => {
-  res.send("Sign in route");
-});
+authRouter.post("/sign-up", signUp);
+authRouter.post("/sign-in", signIn);
 authRouter.get("/sign-out", (req, res) => {
   res.send("Sign out route");
 });
