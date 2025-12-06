@@ -1,11 +1,7 @@
-import {Client as workerClient}  from '@upstash/qstash/workers'
+import { Client } from "@upstash/qstash";
+import { QSTASH_TOKEN, STASH_URL } from "./env.js";
 
-
-import {QSTASH_TOKEN, STASH_URL} from './env.js';
-export const qstashWorker = workerClient ({
-baseUrl: STASH_URL,
-token:QSTASH_TOKEN
-
-
-
-})
+export const workFlowClient = new Client({
+  token: QSTASH_TOKEN,
+  baseUrl: STASH_URL,
+});

@@ -3,14 +3,14 @@ import dayjs from "dayjs";
 const require = createRequire(import.meta.url);
 const remindes = [7, 5, 3, 1];
 import { server } from "@upstash/workflow/express";
-import Subscription from "../models/subscription.model";
+import Subscription from "../models/subscription.model.js";
 
 export const sendReminders = server(async (context) => {
   const { subscriptionId } = context.requestPayload;
 
   const subscription = await fetchSubscription(context, subscriptionId);
 
-  if (!subscription || subscription.status !== "active") {
+  if (!subscription || subscription.status != "active") {
     return;
   }
 
@@ -25,9 +25,11 @@ export const sendReminders = server(async (context) => {
     const reminderDate = renewalDate.subtract(daysbefore, "day");
 
     if (reminderDate.isAfter(dayjs())) {
-      // schedule logic goes here
-      // await sleepUntilReminder(context, `${daysbefore}-days-before`, reminderDate);
+   
+      await sleepUntilReminder(context, `${daysbefore}-days-before`, reminderDate);
     }
+
+    await triggerReminder(context, `Reminder ${daysbefore}-days-before`);
   }
 });
 
