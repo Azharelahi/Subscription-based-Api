@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { User } from "./user.model";
+import  User  from "./user.model.js";
 const subscriptionSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -63,7 +63,7 @@ const subscriptionSchema = new mongoose.Schema({
     index: true,
   },
 });
-subscriptionSchema.pre("save", function (next) {
+subscriptionSchema.pre("save",  function (next) {
   if (!this.renewalDate) {
     const renewalPeriods = {
       daily: 1,
@@ -79,7 +79,7 @@ subscriptionSchema.pre("save", function (next) {
   if (this.renewalDate < new Date()) {
     this.status = "expired";
   }
-  next();
+  next;
 });
 
 const Subscription = mongoose.model("Subscription", subscriptionSchema);

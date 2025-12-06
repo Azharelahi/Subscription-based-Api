@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
+import { createSubscription } from "../controllers/subscription.controller.js";
 const subscriptionRouter = Router();
 
 subscriptionRouter.get("/", (req, res) => {
@@ -16,13 +18,7 @@ subscriptionRouter.get("/user/:id", (req, res) => {
   });
 });
 
-subscriptionRouter.post("/:id", (req, res) => {
-  res.json({
-    title: "Create a subscription",
-    id: req.params.id,
-    body: req.body,
-  });
-});
+subscriptionRouter.post("/", authMiddleware,createSubscription)
 
 subscriptionRouter.delete("/:id", (req, res) => {
   res.json({ title: "Delete a subscription", id: req.params.id });
