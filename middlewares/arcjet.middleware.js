@@ -2,10 +2,10 @@ import { aj } from "../config/arcjet.js";
 
 export const arcjetMiddleware = async (req, res, next) => {
   try {
-    const decision = await aj.protect(req, { requested: 1 });
+    const decision = await aj.protect(req, { requested: 2 });
 
-    if (decision.decision === "deny") {
-      switch (decision.reason) {
+    if (decision.conclusion === "DENY") {
+      switch (decision.reason.type) {
         case "RATE_LIMIT":
           return res
             .status(429)
@@ -25,7 +25,7 @@ export const arcjetMiddleware = async (req, res, next) => {
 
     next();
   } catch (err) {
-    console.error(`Error in Arcjet middleware:`, err);
+    console.error("Error in Arcjet middleware:", err);
     next(err);
   }
 };
