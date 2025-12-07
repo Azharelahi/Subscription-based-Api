@@ -6,7 +6,6 @@ const {serve} = require("@upstash/workflow/express");
 import Subscription from "../models/subscription.model.js";
 
 export const sendReminders = serve(async (context) => {
-  console.log("Workflow started with payload:", context.requestPayload);
   const { subscriptionId } = context.requestPayload;
 
   const subscription = await fetchSubscription(context, subscriptionId);
