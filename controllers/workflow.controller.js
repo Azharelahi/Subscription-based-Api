@@ -1,11 +1,12 @@
 import { createRequire } from "module";
 import dayjs from "dayjs";
 const require = createRequire(import.meta.url);
-const remindes = [7, 5, 3, 1];
-import { server } from "@upstash/workflow/express";
+const reminder = [7, 5, 3, 1];
+const {serve} = require("@upstash/workflow/express");
 import Subscription from "../models/subscription.model.js";
 
-export const sendReminders = server(async (context) => {
+export const sendReminders = serve(async (context) => {
+  console.log("Workflow started with payload:", context.requestPayload);
   const { subscriptionId } = context.requestPayload;
 
   const subscription = await fetchSubscription(context, subscriptionId);
@@ -21,7 +22,7 @@ export const sendReminders = server(async (context) => {
     return;
   }
 
-  for (const daysbefore of remindes) {
+  for (const daysbefore of reminder) {
     const reminderDate = renewalDate.subtract(daysbefore, "day");
 
     if (reminderDate.isAfter(dayjs())) {
