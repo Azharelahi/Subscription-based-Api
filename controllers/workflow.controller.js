@@ -40,7 +40,7 @@ const fetchSubscription = async (context, subscriptionId) => {
 };
 
 const sleepUntilReminder = async (context, label, date) => {
-  console.log(`sleep until ${label} reminder at ${date}`);
+  console.log(`it will sleep until ${label} reminder at ${date}`);
   await context.sleepUntil(label, date.toDate());
 };
  
